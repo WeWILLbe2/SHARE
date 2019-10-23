@@ -8,7 +8,22 @@
       <i class="el-icon-edit nickname" contenteditable="true" @keydown.enter="changeName">{{nickname}}</i>
       <!-- <div class="nickname">用户昵称</div> -->
     </div>
-    <div class="bgover"></div>
+    <div class="bgover">
+      <div class="cout">
+        <div class="cin">
+          <div>88</div>
+          <div>收藏</div>
+        </div>
+        <div  class="cin">
+          <div>66</div>
+          <div>点赞</div>
+        </div>
+        <div  class="cin" style="border:0;">
+          <div>12</div>
+          <div>动态</div>
+        </div>
+      </div>
+    </div>
   </div>
   <!-- <el-image :src="src"></el-image> -->
 </template>
@@ -30,6 +45,22 @@
   background-image: linear-gradient(#ffffff00, #fff);
   position: relative;
   top: -80px;
+  display:flex;
+  justify-content: center;
+  align-items: flex-end;
+}
+.cout{
+  display:flex;
+ 
+}
+.cin{
+  display:flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+   border-right:1px solid #000;
+   padding:0 20px;
+   text-align: center;
 }
 .nickname {
   margin-top: 5px;
