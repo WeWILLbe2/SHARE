@@ -1,9 +1,8 @@
 import Vue from 'vue'
-// import App from './App.vue'
+import App from './App.vue'
 import router from './router'
 import store from './store'
 import bottom from '@/components/bottom.vue'
-import top from '@/components/top.vue'
 import { NavBar,Tabbar, TabbarItem,Row, Col,Image,Icon,Uploader,ActionSheet,Field,Button,Search,Popup  } from 'vant'
 
 
@@ -21,10 +20,10 @@ Vue.use(Popup);
 Vue.config.productionTip = false
 Vue.component('bottoms',bottom)
 
-import MintUI from 'mint-ui'
-import 'mint-ui/lib/style.css'
-import App from './App.vue'
-Vue.use(MintUI)
+// import MintUI from 'mint-ui'
+// import 'mint-ui/lib/style.css'
+// import App from './App.vue'
+// Vue.use(MintUI)
 
 
 new Vue({
