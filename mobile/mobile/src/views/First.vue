@@ -1,20 +1,35 @@
 <template>
     <div class="bgc">
-        <div class="name"><em>SHARE</em></div>
-        <myreg></myreg>
+        <div>
+            <div class="a"></div>
+            <div class="name"><em>SHARE</em></div>
+            <myreg></myreg>
+        </div>
+        <!-- <div class="second"></div> -->
+        <bottoms></bottoms>
     </div>
 </template>
 
 <style>
-    .bgc{
+    .bgc {
         background-image: url("../assets/00.jpg");
-        background-repeat: no-repeat;
-        background-size: 100% 100%;
+        /* background-repeat: no-repeat; */
+        /* background-size: 100% 100%; */
+        height: 520px;
+        display: flex;
+        justify-content: center;
     }
-    .name{
+
+    .name {
         font-size: 34px;
         color: rgb(82, 141, 218);
-        margin-top: 30px;
-        margin-bottom: 30px;;
+        /* margin-top: 30px; */
+        margin-bottom: 30px;
+        ;
     }
+
+    .a {
+        height: 60px;
+    }
+
 </style>

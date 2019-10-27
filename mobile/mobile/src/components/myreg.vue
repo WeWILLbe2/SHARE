@@ -159,8 +159,9 @@
   };
 </script>
 <style>
-/* .myform{
-  display: flex;
-  justify-content: start;
-} */
+
+.el-form-item {
+    margin-bottom: 22px;
+    padding-right: 65px;
+}
 </style>
