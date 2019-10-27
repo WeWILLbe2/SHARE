@@ -9,7 +9,7 @@ let mydb = mysql.createConnection({
     port: "3306",
     user: "root",
     password: "root",
-    database: "painting"
+    database: "share"
 })
 mydb.connect();
 // 跨域处理
@@ -48,7 +48,7 @@ app.post("/regist", function (req, res) {
                 msg: "username_has_exited"
             })
         } else {
-            let newsql = `insert into user(account,password,nickname,flag) values('${req.body.name}','${req.body.passW}','${req.body.nickname}','${req.body.flag}')`
+            let newsql = `insert into user(account,password,nickname) values('${req.body.name}','${req.body.passW}','${req.body.nickname}')`
             mydb.query(newsql, function (err, results) {
                 if (err) {
                     console.log(err);
@@ -83,12 +83,16 @@ app.get('/', (req, res) => {
 //不用子路由,直接在/后面添路径
 
 
-app.get("/getLunbo", (req, res) => {
-    let sql = "select * from goodstype where 1";
-    mydb.query(sql, (err, results) => {
-        // console.log(results)
+app.post("/avater",(req,res)=>{
+    let sql= `INSERT INTO user (img) VALUES ('${req.body.imageUrl}') where account='${req.body.account}'`;
+      console.log(req.body);
+      mydb.query(sql,function(err,results){
+        if (err) {
+            console.log(err);
+            return;
+        }
         res.json(results);
-    })
+      })
 })
 
 app.post("/getImgs", (req, res) => {

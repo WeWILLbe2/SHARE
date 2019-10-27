@@ -130,7 +130,7 @@ export default {
       this.$refs[formName].validate(valid => {
         if (valid) {
           this.axios
-            .post("/regist", this.ruleForm)
+          .post("/regist", this.ruleForm)
             .then(response => {
               if (response.data.msg == "username_has_exited") {
                 this.$alert("该用户名已注册", "注册失败", {
@@ -138,8 +138,8 @@ export default {
                   callback: action => {}
                 });
               } else {
-                this.$message("注册成功");
-                this.$router.push({ path: "/login" });
+                this.$message("注册成功,快去登录吧!");
+                // this.$router.push({ path: "/login" });
               }
             })
             .catch(function(error) {
