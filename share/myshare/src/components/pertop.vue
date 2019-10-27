@@ -2,9 +2,20 @@
   <div>
     <div class="bg">
       <!-- <img style="width:100%;height:260px;"  src="" alt=""> -->
-      <el-avatar :size="80" @error="errorHandler">
-        <img src="https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png" />
-      </el-avatar>
+
+<el-upload
+  class="avatar-uploader"
+  action="http://localhost:8081/upload"
+  :show-file-list="false"
+  :on-success="handleAvatarSuccess"
+  :before-upload="beforeAvatarUpload">
+  <img v-if="imageUrl" :src="imageUrl" class="avatar">
+  <i v-else class="el-icon-plus avatar-uploader-icon"></i>
+</el-upload>
+
+      <!-- <el-avatar :size="80" @error="errorHandler">
+        <img  />
+      </el-avatar> -->
       <i class="el-icon-edit nickname" contenteditable="true" @keydown.enter="changeName">{{nickname}}</i>
       <!-- <div class="nickname">用户昵称</div> -->
     </div>
@@ -73,15 +84,52 @@
 .nickname[contenteditable]:focus {
   outline: none;
 }
+ .avatar-uploader .el-upload {
+    border: 1px dashed #d9d9d9;
+    border-radius: 6px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+  }
+  .avatar-uploader .el-upload:hover {
+    border-color: #409EFF;
+  }
+  .avatar-uploader-icon {
+    font-size: 28px;
+    color: #8c939d;
+    width: 78px;
+    height: 78px;
+    line-height: 78px;
+    text-align: center;
+  }
+  .avatar {
+    width: 78px;
+    height: 78px;
+    border-radius: 50%;
+    display: block;
+  }
 </style>
 <script>
 export default {
   data() {
     return {
-        nickname:'用户昵称'
+        nickname:'用户昵称',
+        imageUrl: "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png",
+        account:this.$getters.userAccount
     };
   },
+  created(){
+  //  this.axios  
+  //       .get("/avater")
+  //           .then(response => {
+  //              console.log(response)
+              
+  //           }).catch({
+            
+  //           })
+  },
   methods: {
+   
     errorHandler() {
       return true;
     },
@@ -95,7 +143,32 @@ export default {
         alert("修改成功");
     //   }
       
-    }
+    },
+        handleAvatarSuccess(res, file) {
+        console.log(res.data.src,file);
+        this.imageUrl=res.data.src;
+        // this.imageUrl = URL.createObjectURL(file.raw);
+        // this.axios.post('/avater',this.imageUrl).then(res=>{
+        //     console.log(res);
+        // }).catch(err=>{
+        //  console.log(err);
+        // })
+
+        
+     
+      },
+      beforeAvatarUpload(file) {
+        const isJPG = file.type === 'image/jpeg';
+        const isLt2M = file.size / 1024 / 1024 < 2;
+
+        if (!isJPG) {
+          this.$message.error('上传头像图片只能是 JPG 格式!');
+        }
+        if (!isLt2M) {
+          this.$message.error('上传头像图片大小不能超过 2MB!');
+        }
+        return isJPG && isLt2M;
+      }
   },
   mounted() {}
 };

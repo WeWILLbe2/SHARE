@@ -24,7 +24,7 @@
     <el-input v-model="dynamicValidateForm.passwd" type="password"></el-input>
   </el-form-item>
   <el-form-item>
-    <el-button type="primary" @click="submitForm('dynamicValidateForm')">提交</el-button>
+    <el-button type="primary" @click="submitForm('dynamicValidateForm')">登录</el-button>
     <el-button @click="resetForm('dynamicValidateForm')">重置</el-button>
   </el-form-item>
 </el-form>
@@ -54,9 +54,9 @@ export default {
             .then(response => {
                 console.log(response.data.msg)
               if (response.data.msg == "登录成功") {
-              this.$store.commit("OnLogin",true)
-                  this.$store.commit("handleUserAccount",this.dynamicValidateForm.account);
-                 this.$store.commit("handleFlag",this.dynamicValidateForm.flag);
+              this.$store.commit("OnLogin",true);
+              this.$store.commit("handleUserAccount",this.dynamicValidateForm.account);
+               
                 console.log(response.data);
                 this.$alert("登录成功", {
                   confirmButtonText: "确定",
@@ -74,7 +74,7 @@ export default {
             .catch(function(error) {
               console.log(error);
             });
-          alert('submit!');
+          // alert('submit!');
         } else {
           console.log("error submit!!");
           return false;

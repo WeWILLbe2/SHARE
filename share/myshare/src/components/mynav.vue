@@ -2,7 +2,7 @@
   <div>
   <el-menu :default-active="activeIndex" class="el-menu-demo" mode="horizontal" @select="handleSelect">
   <div>
-  <el-menu-item index="1" >
+  <el-menu-item index="1" @click="home">
     <em>SHARE</em>
   </el-menu-item>
   <el-menu-item index="2">
@@ -10,9 +10,13 @@
   </el-menu-item>
   </div>
   <div>
-  <el-menu-item index="3" @click="openreg">注册</el-menu-item>
+  <el-menu-item index="3" @click="openreg" >注册</el-menu-item>
   <el-menu-item index="4" @click="openlog">登录</el-menu-item>
-  <el-menu-item index="5" @click="personal">个人中心</el-menu-item>
+  <el-menu-item index="5" v-show="$store.getters.loginstatus==true">欢迎</el-menu-item>
+  <el-menu-item index="6" @click="personal" v-show="$store.getters.loginstatus==true">个人中心</el-menu-item>
+   <el-menu-item index="7" v-on:click="logout" >
+          注销
+        </el-menu-item>
     <!-- <el-button type="text" >点击打开 Message Box</el-button> -->
   </div>
 </el-menu>
@@ -37,7 +41,8 @@ ul.el-menu-demo>div{
       return {
         activeIndex: '1',
         activeIndex2: '1',
-        input:'',
+        input:''
+        
       }
 
     },
@@ -45,13 +50,20 @@ ul.el-menu-demo>div{
       handleSelect(key, keyPath) {
         console.log(key, keyPath);
       },
+      home(){
+      this.$router.push({ path:'/'  });
+      },
          openreg() {
         this.$alert(<myreg></myreg>, '注册账号', {
           dangerouslyUseHTMLString: true,
-          showCancelButton:false,
-          showConfirmButton:false
-         
-        });
+          showCancelButton:true,
+          showConfirmButton:true,
+          closeOnClickModal:true,
+          confirmButtonText:"现在去登录",
+          
+        }).then(()=>{
+              this.openlog();
+        }).catch(()=>{});
       },
         openlog() {
         this.$alert(<mylog></mylog>, '登录账号', {
@@ -59,10 +71,19 @@ ul.el-menu-demo>div{
           showCancelButton:false,
           showConfirmButton:false
          
-        });
+        }).then(()=>{
+          console.log(this.$store.getters.userAccount);
+        }).catch(()=>{});
       },
       personal(){
           this.$router.push({ path:'/personal'  });
+      },
+          logout: function () {
+        // console.log(this.$store.getters.userType);
+        this.$store.commit("LoginOut", false);
+        this.$router.push({
+          path: "/"
+        });
       }
     }
   }
