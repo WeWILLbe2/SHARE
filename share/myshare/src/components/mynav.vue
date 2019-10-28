@@ -7,14 +7,15 @@
   </el-menu-item>
   <el-menu-item index="2">
     <el-input v-model="input" placeholder="请输入内容"></el-input>
+    
   </el-menu-item>
   </div>
   <div>
   <el-menu-item index="3" @click="openreg" >注册</el-menu-item>
-  <el-menu-item index="4" @click="openlog">登录</el-menu-item>
-  <el-menu-item index="5" v-show="$store.getters.loginstatus==true">欢迎</el-menu-item>
+  <el-menu-item index="4" @click="openlog" >登录</el-menu-item>
+  <el-menu-item index="5" v-show="$store.getters.loginstatus==true">欢迎{{$store.getters.userAccount}}</el-menu-item>
   <el-menu-item index="6" @click="personal" v-show="$store.getters.loginstatus==true">个人中心</el-menu-item>
-   <el-menu-item index="7" v-on:click="logout" >
+   <el-menu-item index="7" v-on:click="logout"  v-show="$store.getters.loginstatus==true">
           注销
         </el-menu-item>
     <!-- <el-button type="text" >点击打开 Message Box</el-button> -->
@@ -54,26 +55,28 @@ ul.el-menu-demo>div{
       this.$router.push({ path:'/'  });
       },
          openreg() {
-        this.$alert(<myreg></myreg>, '注册账号', {
-          dangerouslyUseHTMLString: true,
-          showCancelButton:true,
-          showConfirmButton:true,
-          closeOnClickModal:true,
-          confirmButtonText:"现在去登录",
+            this.$router.push({ path:'/myreg'  });
+        // this.$alert(<myreg></myreg>, '注册账号', {
+        //   dangerouslyUseHTMLString: true,
+        //   showCancelButton:true,
+        //   showConfirmButton:true,
+        //   closeOnClickModal:true,
+        //   confirmButtonText:"现在去登录",
           
-        }).then(()=>{
-              this.openlog();
-        }).catch(()=>{});
+        // }).then(()=>{
+        //       this.openlog();
+        // }).catch(()=>{});
       },
         openlog() {
-        this.$alert(<mylog></mylog>, '登录账号', {
-          dangerouslyUseHTMLString: true,
-          showCancelButton:false,
-          showConfirmButton:false
+           this.$router.push({ path:'/mylog'  });
+        // this.$alert(<mylog></mylog>, '登录账号', {
+        //   dangerouslyUseHTMLString: true,
+        //   showCancelButton:false,
+        //   showConfirmButton:false
          
-        }).then(()=>{
-          console.log(this.$store.getters.userAccount);
-        }).catch(()=>{});
+        // }).then(()=>{
+        //   console.log(this.$store.getters.userAccount);
+        // }).catch(()=>{});
       },
       personal(){
           this.$router.push({ path:'/personal'  });
