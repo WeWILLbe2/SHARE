@@ -77,12 +77,21 @@ app.post("/login", function (req, res) {
 })
 
 app.post("/addContent", function (req, res) {
-    // console.log(req.body.constent);
     var mydate=new Date();
-    // console.log()
+    var sql= `INSERT INTO publish(description,ptime,img) 
+    values ('${req.body.constent}','${mydate.toLocaleString()}','${req.body.img}')`
+    mydb.query(sql, function (err, results) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.json(results)
+    })
 
-
-    var sql = `insert into publish(comment,time) values('${req.body.constent}','${mydate.toLocaleString()}')`;
+})
+app.post("/delContent", function (req, res) {
+    console.log(req.body.constent)
+    var sql = `insert into del(delcontent) values('${req.body.constent}')`;
     mydb.query(sql, function (err, results) {
         if (err) {
             console.log(err);
@@ -93,6 +102,14 @@ app.post("/addContent", function (req, res) {
     })
 
 })
+
+app.get('/getdelCon', (req, res) => {
+    let sql = "select * from del where 1";
+    mydb.query(sql, (err, results) => {
+        // console.log(results)
+        res.json(results);
+    })
+});
 app.get('/getCon', (req, res) => {
     let sql = "select * from publish where 1";
     mydb.query(sql, (err, results) => {

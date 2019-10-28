@@ -27,10 +27,29 @@
         </div>
         <div class="kong"></div>
         <div class="page">
-            <div></div>
-            <div></div>
-            <div></div>
-            <div></div>
+            <div>超话专区</div>
+            <div>
+                <div><img src="../assets/02.jpg" alt="">
+                    <div>舒远</div>
+                </div>
+                <div><img src="../assets/03.jpg" alt="">
+                    <div>estar</div>
+                </div>
+                <div><img src="../assets/04.jpg" alt="">
+                    <div>吞海</div>
+                </div>
+                <div><img src="../assets/05.jpg" alt="">
+                    <div>黄三</div>
+                </div>
+            </div>
+        </div>
+        <div class="kong"></div>
+        <div class="last">
+            <div>免流量</div>
+            <div>我的运动</div>
+            <router-link to="/del" tag="li">
+                <div>草稿箱</div>
+            </router-link>
         </div>
 
         <bottoms></bottoms>
@@ -75,38 +94,51 @@
     }
 
     .ul {
-        width:100%;
+        width: 100%;
         height: 40px;
         line-height: 40px;
         border-top: 1px solid rgba(0, 0, 0, 0.062);
         display: flex;
         justify-content: space-around;
     }
-    .list{
+
+    .list {
         font-size: 30px;
-        color:rgba(65, 125, 216, 0.849);
+        color: rgba(65, 125, 216, 0.849);
         display: flex;
         flex-direction: column;
-        align-items:start;
+        align-items: start;
         padding-left: 10px;
     }
-    .list>li{
+
+    .list>li {
         margin-top: 20px;
     }
-    span{
+
+    span {
         margin-left: 20px;
         font-size: 16px;
         color: #090909;
     }
-    .page{
+
+    .page>div:last-child {
         padding-top: 10px;
         display: flex;
         justify-content: space-around;
     }
-    .page>div{
+
+
+    img {
         width: 60px;
         height: 60px;
-        border: 1px solid black;
-       
+        /* border: 1px solid black; */
+
+    }
+
+    .last div {
+        height: 40px;
+        text-align: left;
+        padding-left: 20px;
+        line-height: 40px;
     }
 </style>

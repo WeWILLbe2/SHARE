@@ -1,6 +1,6 @@
 <template>
     <div>
-        <input type="text" placeholder="      请输入商品名称" v-model="kw">
+        <input type="text" placeholder="请搜索感兴趣的事" v-model="kw">
     </div>
 </template>
 <script>

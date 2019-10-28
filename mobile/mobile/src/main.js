@@ -9,6 +9,12 @@ import mylog from '@/components/mylog.vue';
 import bottoms from '@/components/bottom.vue';
 
 import axios from 'axios'
+import {
+  Field,
+  Uploader
+} from 'vant';
+Vue.use(Uploader);
+Vue.use(Field);
 Vue.prototype.axios=axios;
 axios.defaults.baseURL = "http://localhost:8081";
 
