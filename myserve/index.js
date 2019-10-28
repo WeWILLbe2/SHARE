@@ -78,13 +78,13 @@ app.post("/login", function (req, res) {
 })
 
 
-// app.get('/getCon', (req, res) => {
-//     let sql = "select * from publish where 1";
-//     mydb.query(sql, (err, results) => {
-//         // console.log(results)
-//         res.json(results);
-//     })
-// });
+app.get('/getCon', (req, res) => {
+    let sql = "select * from publish where 1";
+    mydb.query(sql, (err, results) => {
+        // console.log(results)
+        res.json(results);
+    })
+});
 
 app.get('/', (req, res) => {
     res.send('Hello World!');

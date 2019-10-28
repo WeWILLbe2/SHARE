@@ -1,5 +1,5 @@
 <template>
-    <div>
+    <div class="bot">
         <router-view />
         <van-tabbar v-model="active" route>
             <van-tabbar-item icon="home-o" replace to="/home">首页</van-tabbar-item>
@@ -30,3 +30,8 @@
         }
     }
 </script>
+<style>
+    .bot{
+        height: 45px;
+    }
+</style>

@@ -7,19 +7,11 @@
         </el-input> -->
 
         <div class="nav">
-         
           <div class="search">
-            <search @myevent="show" :msg="keyW"></search>
-            <ul>
-              <li v-for="p in products" @click="select(p.name)" :key="p.gid">
-                <span>{{p.name}}</span>
-              </li>
-            </ul>
+            <search></search>
           </div>
-          <div class="word" @click="select">搜索</div>
-         
+          <div class="word">搜索</div>
         </div>
-
       </div>
 
 
@@ -52,18 +44,22 @@
       <div class="usermsg">
         <div class="userhead"></div>
         <div>
-          <div>昵称{{data.userid}}</div>
-          <div>{{data.time}}</div>
+          <div>昵称{{data.myaccount}}</div>
+          <div>{{data.ptime}}</div>
         </div>
       </div>
       <div class="userCon">
-        {{data.comment}}
+        <div> {{data.description}}</div>
+        <div class="images" v-for="item in data.img" :key="item">
+          <img :src="data.img">
+        </div>
       </div>
       <div class="like">
-        <van-icon name="share" /><div class="share">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.share}}</div>
-        <van-icon name="like-o" /><div class="likes">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.like}}</div>
+        <van-icon name="share" />
+        <div class="share">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.dz}}</div>
+        <van-icon name="like-o" />
+        <div class="likes">:&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{{data.sc}}</div>
       </div>
-
     </div>
     <bottoms></bottoms>
   </div>
@@ -102,6 +98,7 @@
         ],
         nickname: "",
         dataShow: [],
+        like: ""
 
       }
     },
@@ -110,8 +107,9 @@
         .get("/getCon") //发起请求
         .then(response => {
           response.data.forEach(element => {
-            console.log(response.data[0])
+            console.log(this.dataShow)
             this.dataShow = response.data;
+            // console.log(this.datashow[2].img)
           });
         })
         .catch(function (error) {
@@ -123,17 +121,37 @@
 
       }
     }
+
   }
 </script>
 <style>
-  .share,.likes{
+  .images>div {
+    display: flex;
+    justify-content: start;
+    margin-top: 10px;
+
+  }
+
+  .images>div>div {
+    width: 60px;
+    height: 60px;
+    background-color: rgb(170, 145, 145);
+    margin-left: 40px;
+  }
+
+  .images>div>div:first-child {
+    margin-left: 0;
+  }
+
+  .share,
+  .likes {
     width: 20px;
     height: 40px;
     font-size: 16px;
     line-height: 22px;
     /* background-color: rgb(155, 71, 71); */
     position: relative;
-    left:-72px;
+    left: -62px;
   }
 
 
@@ -165,6 +183,7 @@
     font-family: sans-serif;
     letter-spacing: 3px;
     color: #000;
+    text-align: left;
   }
 
   .content>ul:last-child>li:last-child {
@@ -175,6 +194,7 @@
     width: 10px;
     height: 90px;
     border-left: 1px solid #1b181838;
+
   }
 
   .kong {
@@ -208,30 +228,38 @@
     font-size: 12px;
     padding-left: 10px;
     box-sizing: border-box;
+    text-align: left;
   }
 
   .usermsg>div:nth-child(2) {
+    width: 76%;
     height: 50px;
     padding-top: 15px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
-
+    display: flex;
+    justify-content: space-between;
   }
 
   .userCon {
     margin-top: 10px;
     width: 90%;
-    height: 40px;
-    border: 1px solid black;
+    /* height: 40px; */
     margin-left: 10px;
+    -webkit-box-sizing: border-box;
     box-sizing: border-box;
+    text-align: left;
+    padding-left: 12px;
+
   }
 
   .like {
-    margin-top: 10px;
+    margin-top: 14px;
     width: 90%;
     font-size: 20px;
     display: flex;
     justify-content: space-around;
+    padding-left: 36px;
   }
 
   .nav {

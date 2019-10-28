@@ -5,6 +5,7 @@ import First from '../views/First.vue'
 import Login from '../views/login.vue'
 import Self from '../views/Self.vue'
 import Push from '../views/Push.vue'
+import del from '../views/del.vue'
 
 Vue.use(VueRouter)
 
@@ -42,6 +43,11 @@ const routes = [
     path: '/self',
     name: 'self',
     component:Self
+  },
+  {
+    path: '/del',
+    name: 'del',
+    component:del
   }
 ]
 
