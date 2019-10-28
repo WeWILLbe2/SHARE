@@ -35,6 +35,7 @@ app.use(function (req, res, next) { //允许跨域
 })
 
 app.post("/regist", function (req, res) {
+    // console.log(req.body);
     var sql = "select * from user where account='" + req.body.name + "'";
     mydb.query(sql, function (err, results) {
         if (err) {
@@ -118,37 +119,46 @@ app.get('/getCon', (req, res) => {
     })
 });
 
-
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });
 //不用子路由,直接在/后面添路径
 
 
-app.post("/avater", (req, res) => {
-    let sql = `INSERT INTO user (img) VALUES ('${req.body.imageUrl}') where account='${req.body.account}'`;
-    console.log(req.body);
-    mydb.query(sql, function (err, results) {
+app.post("/avater",(req,res)=>{
+    console.log(req.body);  
+    console.log(11111);
+  
+    let sql= `UPDATE user SET avater="${req.body.img}" WHERE account="${req.body.account}"`;
+   
+      mydb.query(sql,function(err,results){
+      
         if (err) {
             console.log(err);
             return;
         }
         res.json(results);
-    })
-})
+      })
+});
 
-app.post("/getImgs", (req, res) => {
-    let sql = "select * from goods where 1 ";
-    console.log(req.body)
-    if (req.body.params.type != undefined) {
-        sql += "and typeid=" + req.body.params.type
-    }
-
-    if (req.body.params.kw) {
-        sql += " and name like '" + req.body.params.kw + "'"
-    }
+app.post("/nickname",(req,res)=>{
+    console.log(req.body);  
+    console.log(11111);
+  
+    let sql= `UPDATE user SET nickname="${req.body.nickname}" WHERE account="${req.body.account}"`;
+   
+      mydb.query(sql,function(err,results){
+      
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.json(results);
+      })
+});
+app.post('/getuserinfo',(req,res)=>{
+    let sql=`select nickname,avater from user where account="${req.body.account}"`;
     mydb.query(sql, (err, results) => {
-        // console.log(results)
         if (err) {
             console.log("数据请求错误!")
             return;
@@ -156,178 +166,36 @@ app.post("/getImgs", (req, res) => {
         res.json(results);
     })
 
-    // console.log(req.body.params.type)
-
-})
-app.post("/select", (req, res) => {
-    // console.log(req.body.params.goods,777)
-    if (typeof (req.body.params.goods) == "object") {
-        // console.log(7777)
-        for (var i = 0; i < req.body.params.goods.length; i++) {
-            console.log(req.body.params.goods[i].name);
-            let sql = "select * from goods where name='" + req.body.params.goods[i].name + "'";
-            mydb.query(sql, (err, results) => {
-                console.log(results, 666);
-                res.json(results);
-            })
-        }
-    }
-
-
 })
 
 
-app.get("/goods", (req, res) => {
-    console.log(req.query)
-
-    if (req.query.kw) {
-        let sql = "select * from goods where 1 and name like '%" + req.query.kw + "%'"
-        mydb.query(sql, (err, results) => {
-            console.log(results);
-            res.json(results);
-        })
-    } else {
-        res.json([])
-    }
-
-
-})
-app.post('/publish', function (req, res) {
-    var sql = "select * from goods where name='" + req.body.name + "'";
+app.post("/addContent", function (req, res) {
+    var mydate=new Date();
+    var sql= `INSERT INTO publish(description,ptime,img,myaccount) 
+    values ('${req.body.constent}','${mydate.toLocaleString()}','${req.body.img}','${req.body.account}')`
     mydb.query(sql, function (err, results) {
-        if (results.length > 0) {
-            res.json({
-                msg: "existed"
-            });
-        } else {
-            // var newsql=`INSERT INTO goods(name,drawer,nationality,price,stock,img,description,typeid) values ('${req.body.name}','${req.body.drawer}','${req.body.nation}','${req.body.price}','${req.body.stock}','${req.body.fileList}','${req.body.descripe}','${req.body.type}')`;
-            var newsql = `INSERT INTO goods(name,drawer,nationality,price,stock,description,typeid,img) 
-        values ('${req.body.name}','${req.body.drawer}','${req.body.nation}','${req.body.price}','${req.body.stock}','${req.body.descripe}','${req.body.type}','${req.body.fileList}')`;
-            console.log(newsql)
-            mydb.query(newsql, function (err, results) {
-                if (err) {
-                    console.log(" publish error")
-                    return;
-                }
-                res.json(results);
-            })
+        if (err) {
+            console.log(err);
+            return;
         }
-
+        res.json(results)
     })
-});
 
+})
+
+app.post("/getinfor", (req, res) =>{
+    let sql=`select my.avater,my.nickname,img,ptime,description,dz,sc from publish,(select avater,nickname from user,publish where user.account=publish.myaccount) as my`;
+    mydb.query(sql, function (err, results) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.json(results)
+    })
+})
 
 app.use('/upload', require('./Controller/UploadController'));
 app.use('/IMG', express.static(__dirname + '/IMG'));
-
-
-
-
-app.post('/getmyorder', function (req, res) {
-    let sql = `select * from myoder where 1 `;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log(results);
-            res.json(results);
-        }
-    })
-})
-
-
-app.post('/getdetail', function (req, res) {
-    let sql = `select * from goods where gid='${req.body.gid}'`;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log(results[0]);
-            res.json(results[0]);
-        }
-    })
-})
-
-
-
-app.post('/insertorder', function (req, res) {
-    console.log(req.body.totalPrice);
-    let sql = `INSERT INTO myoder (name,paynumber,userid,totalprice,state) VALUES ('${req.body.name}','${req.body.number}','12','${req.body.totalPrice}','1')`;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log(results[0]);
-            res.json(results[0]);
-        }
-    })
-})
-
-
-
-app.post('/addcar', function (req, res) {
-    console.log(req.body.gid);
-    let sql = `select * from mycar where gid = '${req.body.gid}'`;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        if (results.length > 0) {
-            let ssql = `update mycar set number=${results[0].number}+'${req.body.number}' where gid = '${req.body.gid}'`;
-            mydb.query(ssql, function (err, results) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                res.json(results)
-            })
-        } else {
-            let newsql = `insert into mycar (userid,gid,number) values('73','${req.body.gid}','${req.body.number}')`;
-            mydb.query(newsql, function (err, results) {
-                if (err) {
-                    console.log(err);
-                    return;
-                }
-                res.json(results)
-            })
-        }
-    })
-})
-
-
-app.post('/getmycar', function (req, res) {
-    console.log(req.body.gid);
-    let sql = `select g.name, g.img, g.price,m.number from goods as g ,mycar as m where g.gid=m.gid `;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log(results);
-            res.json(results);
-        }
-    })
-})
-
-app.post('/updatamycar', function (req, res) {
-    console.log(req.body.gid);
-    let sql = `delete  from mycar where gid='${req.body.gid}'`;
-    mydb.query(sql, (err, results) => {
-        if (err) {
-            console.log(err);
-            return;
-        } else {
-            console.log(results);
-            res.json(results);
-        }
-    })
-})
-
-
 
 app.listen(8081, () => {
     console.log('Example app listening on port 8081!');

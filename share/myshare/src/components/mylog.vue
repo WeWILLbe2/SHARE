@@ -1,7 +1,7 @@
 <template>
   
     <div class="login">
-    
+      <div class="overstyle"></div>
       <el-form :model="dynamicValidateForm" ref="dynamicValidateForm" label-width="100px" class="demo-dynamic">
   
   <el-form-item
@@ -31,6 +31,70 @@
     </div>
 
 </template>
+<style  scoped>
+.login{
+  width:100%;
+  height: 500px;
+  display: flex;
+  justify-content: center;
+  margin: 0px auto;
+  background: url("../assets/bg.jpeg") no-repeat;
+  background-position: center;
+  background-size: 100% 100%;
+  overflow: hidden;
+}
+.el-form{
+	z-index: 10;
+	position: absolute;
+	top:160px;
+	margin:0 auto;
+}
+.el-form-item{
+	width:460px;
+}
+.el-select{
+  width:360px;
+}
+.el-form-item__label{
+	color:#fff !important;
+}
+.el-input__inner{
+	background-color: transparent !important;
+		color:#fff !important;
+}
+.el-input{
+	color:#fff !important;
+}
+input:focus{border-color:#12c6d3 !important;}
+.overstyle {
+  width: 100%;
+  height:500px;
+  /* height: auto; */
+  background: #00000030;
+  opacity: 0.5;
+  position: relative;
+  z-index: 10;
+  /* top: -500px; */
+}
+.el-button--primary {
+    color: #FFF;
+   
+	background-color:transparent !important;
+    border-color: #12c6d3 !important;
+}
+.el-button--primary:hover{
+ background-color: #12c6d3 !important;
+
+}
+.el-button--default{
+		background-color:transparent !important;
+		color:#fff !important;
+}
+.el-button--default:hover{
+	background-color:#fff !important;
+	color: #12c6d3 !important;
+}
+</style>
 <script>
 export default {
   data() {
@@ -54,8 +118,12 @@ export default {
             .then(response => {
                 console.log(response.data.msg)
               if (response.data.msg == "登录成功") {
-              this.$store.commit("OnLogin",true);
-              this.$store.commit("handleUserAccount",this.dynamicValidateForm.account);
+                 localStorage.setItem('user_account', this.dynamicValidateForm.account);
+                 console.log(localStorage.getItem('user_account'));
+               
+               
+           this.$store.commit("OnLogin",true);
+             this.$store.commit("handleUserAccount",this.dynamicValidateForm.account);
                
                 console.log(response.data);
                 this.$alert("登录成功", {

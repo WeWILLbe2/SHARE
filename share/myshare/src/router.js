@@ -3,6 +3,8 @@ import Router from 'vue-router'
 import Home from './views/Home.vue'
 import About from './views/About.vue'
 import Personal from './views/Personal.vue'
+import Mylog from './views/Mylog.vue'
+import Myreg from './views/Myreg.vue'
 Vue.use(Router)
 
 export default new Router({
@@ -23,6 +25,21 @@ export default new Router({
       path: '/personal',
       name: 'personal',
       component:Personal
+    },
+    {
+      path: '/personal',
+      name: 'personal',
+      component:Personal
+    },
+    {
+      path: '/mylog',
+      name: 'mylog',
+      component:Mylog
+    },
+    {
+      path: '/myreg',
+      name: 'myreg',
+      component:Myreg
     }
   ]
 })

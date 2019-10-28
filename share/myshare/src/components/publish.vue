@@ -12,10 +12,11 @@
       <div>
         
       <el-upload 
-        action="https://jsonplaceholder.typicode.com/posts/"
+        action="http://localhost:8081/upload"
         list-type="picture-card"
         :on-preview="handlePictureCardPreview"
         :on-remove="handleRemove"
+        :on-success="handleSuccess"
       >
         <i class="el-icon-plus"></i>
       </el-upload>
@@ -24,7 +25,7 @@
       </el-dialog>
       </div>
       <div style="display:flex;justify-content:center">
-      <el-button type="primary" plain>发布</el-button>
+      <el-button type="primary" plain @click="publish">发布</el-button>
       </div>
     </div>
   </div>
@@ -76,7 +77,9 @@ export default {
     return {
       textarea2: "",
       dialogImageUrl: "",
-      dialogVisible: false
+      dialogVisible: false,
+      myarr:[],
+       account: this.$store.getters.userAccount
     };
   },
   methods: {
@@ -86,6 +89,26 @@ export default {
     handlePictureCardPreview(file) {
       this.dialogImageUrl = file.url;
       this.dialogVisible = true;
+    },
+    handleSuccess(response, file, fileList){
+      this.myarr.push(response.data.src)
+      console.log(response.data.src)
+      fileList.forEach(e=>{
+        console.log(e.name)
+      })
+      console.log(fileList);
+    },
+    publish(){
+      console.log(this.myarr.join(''));
+       this.axios
+        .post("/addContent",{account:this.account,constent:this.textarea2,img:this.myarr.join(',')})
+        .then(res => {
+          console.log(res.data);
+           alert('发布成功');
+        })
+        .catch(err => {
+          console.log(err);
+        });
     }
   }
 };
