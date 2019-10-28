@@ -13,9 +13,9 @@
   <div>
   <el-menu-item index="3" @click="openreg" >注册</el-menu-item>
   <el-menu-item index="4" @click="openlog" >登录</el-menu-item>
-  <el-menu-item index="5" v-show="$store.getters.loginstatus==true">欢迎{{$store.getters.userAccount}}</el-menu-item>
-  <el-menu-item index="6" @click="personal" v-show="$store.getters.loginstatus==true">个人中心</el-menu-item>
-   <el-menu-item index="7" v-on:click="logout"  v-show="$store.getters.loginstatus==true">
+  <el-menu-item index="5" >欢迎{{$store.getters.userAccount}}</el-menu-item>
+  <el-menu-item index="6" @click="personal">个人中心</el-menu-item>
+   <el-menu-item index="7" v-on:click="logout"  >
           注销
         </el-menu-item>
     <!-- <el-button type="text" >点击打开 Message Box</el-button> -->
@@ -56,27 +56,11 @@ ul.el-menu-demo>div{
       },
          openreg() {
             this.$router.push({ path:'/myreg'  });
-        // this.$alert(<myreg></myreg>, '注册账号', {
-        //   dangerouslyUseHTMLString: true,
-        //   showCancelButton:true,
-        //   showConfirmButton:true,
-        //   closeOnClickModal:true,
-        //   confirmButtonText:"现在去登录",
-          
-        // }).then(()=>{
-        //       this.openlog();
-        // }).catch(()=>{});
+       
       },
         openlog() {
            this.$router.push({ path:'/mylog'  });
-        // this.$alert(<mylog></mylog>, '登录账号', {
-        //   dangerouslyUseHTMLString: true,
-        //   showCancelButton:false,
-        //   showConfirmButton:false
-         
-        // }).then(()=>{
-        //   console.log(this.$store.getters.userAccount);
-        // }).catch(()=>{});
+     
       },
       personal(){
           this.$router.push({ path:'/personal'  });

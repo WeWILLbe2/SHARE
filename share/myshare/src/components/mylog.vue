@@ -102,13 +102,14 @@ export default {
       dynamicValidateForm: {
        passwd :"",
         account: "",
+        mystatus:false
       }
     
     };
   },
   methods: {
    beforeCreate:function(){
-    this.$store.commit("OnLogin",false)
+    // this.$store.commit("OnLogin",false)
     },
     submitForm(formName) {
       this.$refs[formName].validate(valid => {
@@ -118,11 +119,12 @@ export default {
             .then(response => {
                 console.log(response.data.msg)
               if (response.data.msg == "登录成功") {
+                this.mystatus=true;
                  localStorage.setItem('user_account', this.dynamicValidateForm.account);
                  console.log(localStorage.getItem('user_account'));
                
                
-           this.$store.commit("OnLogin",true);
+           this.$store.commit("OnLogin", this.mystatus);
              this.$store.commit("handleUserAccount",this.dynamicValidateForm.account);
                
                 console.log(response.data);

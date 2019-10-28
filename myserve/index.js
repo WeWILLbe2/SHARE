@@ -77,30 +77,14 @@ app.post("/login", function (req, res) {
     })
 })
 
-app.post("/addContent", function (req, res) {
-    // console.log(req.body.constent);
-    var mydate=new Date();
-    // console.log()
 
-
-    var sql = `insert into publish(comment,time) values('${req.body.constent}','${mydate.toLocaleString()}')`;
-    mydb.query(sql, function (err, results) {
-        if (err) {
-            console.log(err);
-            return;
-        }
-        // console.log(results,123);
-        res.json(results)
-    })
-
-})
-app.get('/getCon', (req, res) => {
-    let sql = "select * from publish where 1";
-    mydb.query(sql, (err, results) => {
-        // console.log(results)
-        res.json(results);
-    })
-});
+// app.get('/getCon', (req, res) => {
+//     let sql = "select * from publish where 1";
+//     mydb.query(sql, (err, results) => {
+//         // console.log(results)
+//         res.json(results);
+//     })
+// });
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -167,7 +151,11 @@ app.post("/addContent", function (req, res) {
 })
 
 app.post("/getinfor", (req, res) =>{
-    let sql=`select my.avater,my.nickname,img,ptime,description,dz,sc from publish,(select avater,nickname from user,publish where user.account=publish.myaccount) as my`;
+    let sql=`SELECT 
+    p.ptime, my.avater,my.nickname,p.img, p.description,p.dz,p.sc
+ FROM publish as p
+ LEFT JOIN user AS my
+ ON my.account=p.myaccount`;
     mydb.query(sql, function (err, results) {
         if (err) {
             console.log(err);
@@ -176,6 +164,22 @@ app.post("/getinfor", (req, res) =>{
         res.json(results)
     })
 })
+
+app.post("/getowninfor", (req, res) =>{
+    let sql=`SELECT 
+    p.ptime, my.avater,my.nickname,p.img, p.description,p.dz,p.sc
+ FROM publish as p
+ LEFT JOIN user AS my
+ ON my.account=p.myaccount where my.account='${req.body.account}'`;
+    mydb.query(sql, function (err, results) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        res.json(results)
+    })
+})
+
 
 app.use('/upload', require('./Controller/UploadController'));
 app.use('/IMG', express.static(__dirname + '/IMG'));
