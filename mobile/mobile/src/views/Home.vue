@@ -51,7 +51,7 @@
       <div class="userCon">
         <div> {{data.description}}</div>
         <div class="images" v-for="item in data.img" :key="item">
-          <img :src="data.img" alt="图片加载失败">
+          <img :src="data.img">
         </div>
       </div>
       <div class="like">
