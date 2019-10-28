@@ -1,5 +1,5 @@
 <template>
-  <el-card shadow="hover" style="max-width:1000px;min-width:600px;margin:0 auto">
+  <el-card   shadow="hover" style="max-width:1000px;min-width:600px;margin:0 auto"  >
     <div style="display:flex;justify-content:space-between;align-items:center;width:80%">
       <div style="display:flex;">
         <el-avatar :size="60" @error="errorHandler">
@@ -42,10 +42,7 @@
   </el-card>
 </template>
 <style scoped>
-/* el-avater::after{
-content:'<p>这是用户名</p>';
-font-size: 20px;
-} */
+
 .el-carousel__item h3 {
   color: #475669;
   font-size: 14px;
@@ -115,7 +112,8 @@ export default {
       dz: 0,
       sc: 0,
       description:'',
-      eveimg:''
+      eveimg:'',
+      alldata:[]
     };
   },
 created:function(){
@@ -123,6 +121,7 @@ created:function(){
         .post("/getinfor")
         .then(res => {
           console.log(res.data);
+         this.alldata=res.data;
           this.nickname=res.data[0].nickname;
           this.imgurl=res.data[0].avater;
           this.ptime=res.data[0].ptime;
