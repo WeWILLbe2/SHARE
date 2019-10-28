@@ -77,6 +77,30 @@ app.post("/login", function (req, res) {
     })
 })
 
+app.post("/addContent", function (req, res) {
+    // console.log(req.body.constent);
+    var mydate=new Date();
+    // console.log()
+
+
+    var sql = `insert into publish(comment,time) values('${req.body.constent}','${mydate.toLocaleString()}')`;
+    mydb.query(sql, function (err, results) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        // console.log(results,123);
+        res.json(results)
+    })
+
+})
+app.get('/getCon', (req, res) => {
+    let sql = "select * from publish where 1";
+    mydb.query(sql, (err, results) => {
+        // console.log(results)
+        res.json(results);
+    })
+});
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -153,22 +177,8 @@ app.post("/getinfor", (req, res) =>{
     })
 })
 
-
-
-
-
-
-
-
-
 app.use('/upload', require('./Controller/UploadController'));
 app.use('/IMG', express.static(__dirname + '/IMG'));
-
-
-
-
-
-
 
 app.listen(8081, () => {
     console.log('Example app listening on port 8081!');

@@ -4,9 +4,8 @@
             <div class="a"></div>
             <div class="name"><em>SHARE</em></div>
             <myreg></myreg>
+            <div class="mylogin" @click="goLogin">我已有账号，去登陆</div>
         </div>
-        <!-- <div class="second"></div> -->
-        <bottoms></bottoms>
     </div>
 </template>
 
@@ -32,4 +31,21 @@
         height: 60px;
     }
 
+    .mylogin {
+        background-color: #6099d229;
+        width: 168px;
+        margin-left: 151px;
+    }
 </style>
+<script>
+export default{
+    methods:{
+        goLogin:function(){
+        this.$router.push({ path: "/login" });
+        }
+
+    }
+
+}
+
+</script>

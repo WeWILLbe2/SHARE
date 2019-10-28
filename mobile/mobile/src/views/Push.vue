@@ -3,7 +3,7 @@
         <nav>
             <div>取消</div>
             <div>分享动态</div>
-            <div>发布</div>
+            <div @click="changMsg">发布</div>
         </nav>
         <div class="share">
             <van-cell-group>
@@ -27,13 +27,30 @@
         data() {
             return {
                 textarea: '',
-                fileList: []
+                fileList: [],
+                message: ""
             }
         },
         methods: {
             afterRead(file) {
                 // 此时可以自行将文件上传至服务器
                 console.log(file);
+            },
+            changMsg() {
+                // this.message = this.message;
+                console.log(this.message)
+
+                this.axios
+                    .post("/addContent",{
+                        constent:this.message
+                    }) //发起请求
+                    .then(response => {
+                        console.log(response.data);
+
+                    })
+                    .catch(function (error) {
+                        console.log(error);
+                    });
             }
         }
     }
@@ -46,11 +63,13 @@
         background-color: #e6e6e685;
         box-sizing: border-box;
     }
-    .van-uploader__wrapper{
+
+    .van-uploader__wrapper {
         padding-left: 10%;
     }
+
     .van-uploader__preview {
-    position: relative;
-    margin: 0px 12px 17px 4px;
-}
+        position: relative;
+        margin: 0px 12px 17px 4px;
+    }
 </style>
