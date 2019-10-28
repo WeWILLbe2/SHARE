@@ -37,13 +37,16 @@
                 console.log(file);
             },
             changMsg() {
-                this.message = this.message + "as";
+                // this.message = this.message;
+                console.log(this.message)
 
                 this.axios
-                    .get("/addContent",this.message) //发起请求
+                    .post("/addContent",{
+                        constent:this.message
+                    }) //发起请求
                     .then(response => {
                         console.log(response.data);
-                        
+
                     })
                     .catch(function (error) {
                         console.log(error);

@@ -76,6 +76,31 @@ app.post("/login", function (req, res) {
     })
 })
 
+app.post("/addContent", function (req, res) {
+    // console.log(req.body.constent);
+    var mydate=new Date();
+    // console.log()
+
+
+    var sql = `insert into publish(comment,time) values('${req.body.constent}','${mydate.toLocaleString()}')`;
+    mydb.query(sql, function (err, results) {
+        if (err) {
+            console.log(err);
+            return;
+        }
+        // console.log(results,123);
+        res.json(results)
+    })
+
+})
+app.get('/getCon', (req, res) => {
+    let sql = "select * from publish where 1";
+    mydb.query(sql, (err, results) => {
+        // console.log(results)
+        res.json(results);
+    })
+});
+
 
 app.get('/', (req, res) => {
     res.send('Hello World!');
@@ -83,16 +108,16 @@ app.get('/', (req, res) => {
 //不用子路由,直接在/后面添路径
 
 
-app.post("/avater",(req,res)=>{
-    let sql= `INSERT INTO user (img) VALUES ('${req.body.imageUrl}') where account='${req.body.account}'`;
-      console.log(req.body);
-      mydb.query(sql,function(err,results){
+app.post("/avater", (req, res) => {
+    let sql = `INSERT INTO user (img) VALUES ('${req.body.imageUrl}') where account='${req.body.account}'`;
+    console.log(req.body);
+    mydb.query(sql, function (err, results) {
         if (err) {
             console.log(err);
             return;
         }
         res.json(results);
-      })
+    })
 })
 
 app.post("/getImgs", (req, res) => {
@@ -181,10 +206,10 @@ app.use('/IMG', express.static(__dirname + '/IMG'));
 
 
 
-app.post('/getmyorder',function(req,res){
+app.post('/getmyorder', function (req, res) {
     let sql = `select * from myoder where 1 `;
-    mydb.query(sql,(err,results)=>{
-        if(err){
+    mydb.query(sql, (err, results) => {
+        if (err) {
             console.log(err);
             return;
         } else {
@@ -210,14 +235,14 @@ app.post('/getdetail', function (req, res) {
 
 
 
-app.post('/insertorder',function(req,res){
+app.post('/insertorder', function (req, res) {
     console.log(req.body.totalPrice);
     let sql = `INSERT INTO myoder (name,paynumber,userid,totalprice,state) VALUES ('${req.body.name}','${req.body.number}','12','${req.body.totalPrice}','1')`;
-    mydb.query(sql,(err,results)=>{
-        if(err){
+    mydb.query(sql, (err, results) => {
+        if (err) {
             console.log(err);
             return;
-        }else{
+        } else {
             console.log(results[0]);
             res.json(results[0]);
         }
@@ -226,33 +251,33 @@ app.post('/insertorder',function(req,res){
 
 
 
-app.post('/addcar',function(req,res){
+app.post('/addcar', function (req, res) {
     console.log(req.body.gid);
     let sql = `select * from mycar where gid = '${req.body.gid}'`;
-    mydb.query(sql,(err,results)=>{
-        if(err){
+    mydb.query(sql, (err, results) => {
+        if (err) {
             console.log(err);
             return;
         }
-        if(results.length>0){
-            let ssql =`update mycar set number=${results[0].number}+'${req.body.number}' where gid = '${req.body.gid}'`;
-            mydb.query(ssql,function(err,results){
-				if(err){
-					console.log(err);
-					return;
-				}
-				res.json(results)
-			})
-		}else{
-			let newsql = `insert into mycar (userid,gid,number) values('73','${req.body.gid}','${req.body.number}')`;
-			mydb.query(newsql,function(err,results){
-				if(err){
-					console.log(err);
-					return;
-				}
-				res.json(results)
-			})
-		}
+        if (results.length > 0) {
+            let ssql = `update mycar set number=${results[0].number}+'${req.body.number}' where gid = '${req.body.gid}'`;
+            mydb.query(ssql, function (err, results) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.json(results)
+            })
+        } else {
+            let newsql = `insert into mycar (userid,gid,number) values('73','${req.body.gid}','${req.body.number}')`;
+            mydb.query(newsql, function (err, results) {
+                if (err) {
+                    console.log(err);
+                    return;
+                }
+                res.json(results)
+            })
+        }
     })
 })
 
@@ -271,14 +296,14 @@ app.post('/getmycar', function (req, res) {
     })
 })
 
-app.post('/updatamycar',function(req,res){
+app.post('/updatamycar', function (req, res) {
     console.log(req.body.gid);
     let sql = `delete  from mycar where gid='${req.body.gid}'`;
-    mydb.query(sql,(err,results)=>{
-        if(err){
+    mydb.query(sql, (err, results) => {
+        if (err) {
             console.log(err);
             return;
-        }else{
+        } else {
             console.log(results);
             res.json(results);
         }

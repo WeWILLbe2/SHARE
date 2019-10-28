@@ -8,6 +8,10 @@ import myreg from '@/components/myreg.vue';
 import mylog from '@/components/mylog.vue';
 import bottoms from '@/components/bottom.vue';
 
+import axios from 'axios'
+Vue.prototype.axios=axios;
+axios.defaults.baseURL = "http://localhost:8081";
+
 Vue.config.productionTip = false
 Vue.use(ElementUI);
 Vue.component("myreg", myreg);

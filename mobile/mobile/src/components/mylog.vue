@@ -63,7 +63,7 @@ export default {
                   callback: action => {}
                 });
                
-                this.$router.push({ path: "/" });
+                this.$router.push({ path: "/self" });
               } else {
                 this.$alert("登录失败", {
                   confirmButtonText: "确定",
