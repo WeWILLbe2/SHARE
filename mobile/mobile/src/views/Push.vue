@@ -45,22 +45,7 @@
                 // 此时可以自行将文件上传至服务器
                 console.log(file);
             },
-            // changMsg() {
-            //     // this.message = this.message;
-            //     console.log(this.message)
-
-            //     this.axios
-            //         .post("/addContent", {
-            //             constent: this.message
-            //         }) //发起请求
-            //         .then(response => {
-            //             console.log(response.data);
-
-            //         })
-            //         .catch(function (error) {
-            //             console.log(error);
-            //         });
-            // },
+           
             del() {
                 this.axios
                     .post("/delContent", {
@@ -106,6 +91,9 @@
                     .catch(err => {
                         console.log(err);
                     });
+                    this.$router.push({
+                    path: "/Home"
+                });
             }
         }
     }

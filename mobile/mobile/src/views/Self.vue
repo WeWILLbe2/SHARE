@@ -2,17 +2,18 @@
     <div class="all">
         <div>
             <div class="User">
-                <div class="u"></div>
+                <div class="u"><img src="../assets/logo.png" alt=""></div>
                 <div class="umsg">
-                    <div>昵称</div>
-                    <div>简介：暂无简介</div>
+                    <div>十一ar</div>
+                    <div>简介：勤勤恳恳的码农</div>
                 </div>
+
                 <div></div>
             </div>
             <ul class="ul">
-                <li>动态</li>
-                <li>关注</li>
-                <li>粉丝</li>
+                <li>动态&nbsp;:13</li>
+                <li>关注&nbsp;:9</li>
+                <li>粉丝&nbsp;:5</li>
             </ul>
 
         </div>
@@ -56,8 +57,109 @@
     </div>
 </template>
 <script>
+    export default {
+        data() {
+            return {
+                nickname: "用户昵称",
+                imageUrl: "https://cube.elemecdn.com/e/fd/0fc7d20532fdaf769a25683617711png.png",
+                account: this.$store.getters.userAccount
+            };
+        },
+        created: function () {
+            this.axios
+                .post("/getuserinfo", {
+                    account: this.account
+                })
+                .then(res => {
+                    console.log(res.data);
+                    this.nickname = res.data[0].nickname;
+                    this.imageUrl = res.data[0].avater;
+                })
+                .catch(err => {
+                    console.log(err);
+                });
+
+        },
+        methods: {
+            onload: function () {
+                console.log(body);
+            },
+
+            errorHandler() {
+                return true;
+            },
+            changeName: function (e) {
+                //     alert("ok");
+                //   if (e.charCode === 13) {
+                e.preventDefault();
+                e.stopPropagation();
+                var newnick = document.querySelector(".nickname").innerHTML;
+                this.nickname = newnick;
+                alert("修改成功");
+                this.axios
+                    .post("/nickname", {
+                        nickname: this.nickname,
+                        account: this.account
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                //   }
+            },
+            handleAvatarSuccess(res, file) {
+                console.log(res.data.src, file);
+                this.imageUrl = res.data.src;
+                // this.imageUrl = URL.createObjectURL(file.raw);
+                this.axios
+                    .post("/avater", {
+                        img: this.imageUrl,
+                        account: this.account
+                    })
+                    .then(res => {
+                        console.log(res);
+                    })
+                    .catch(err => {
+                        console.log(err);
+                    });
+                // this.axios.post('/avater',this.imageUrl).then(res=>{
+                //     console.log(res);
+                // }).catch(err=>{
+                //  console.log(err);
+                // })
+            },
+            beforeAvatarUpload(file) {
+                const isJPG = file.type === "image/jpeg";
+                const isLt2M = file.size / 1024 / 1024 < 2;
+
+                if (!isJPG) {
+                    this.$message.error("上传头像图片只能是 JPG 格式!");
+                }
+                if (!isLt2M) {
+                    this.$message.error("上传头像图片大小不能超过 2MB!");
+                }
+                return isJPG && isLt2M;
+            }
+        },
+        mounted() {}
+    };
 </script>
 <style>
+    /* .bg {
+    background-image: url("../assets/00.jpg");
+    background-repeat: no-repeat;
+    background-position: center;
+    width: 28%;
+    height: 100px;
+    border-radius: 50%;
+    flex-direction: column;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  } */
+
     ul,
     li {
         list-style: none;
@@ -76,11 +178,11 @@
 
     }
 
-    .u {
+    .u>img {
         width: 50px;
         height: 50px;
         border-radius: 50%;
-        background-color: rgb(209, 123, 123);
+        /* background-color: rgb(209, 123, 123); */
         margin-right: 10px;
     }
 
@@ -91,6 +193,9 @@
         font-size: 12px;
         /* background-color: rgb(177, 123, 123); */
         box-sizing: border-box;
+    }
+    .umsg>div{
+        text-align: start;
     }
 
     .ul {
