@@ -150,8 +150,9 @@ export default {
       .post("/getowninfor",{account:this.account})
       .then(res => {
         console.log(res.data);
-        this.alldata = res.data;
-        this.alldata.forEach(e => {});
+        var aa=res.data;
+        console.log(aa.reverse())
+        this.alldata =aa.reverse();
       })
       .catch(err => {
         console.log(err);

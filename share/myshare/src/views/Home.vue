@@ -123,7 +123,7 @@ export default {
       .post("/getinfor")
       .then(res => {
         console.log(res.data);
-        this.alldata = res.data;
+        this.alldata = (res.data).reverse();
         
       })
       .catch(err => {
