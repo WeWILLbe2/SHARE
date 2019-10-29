@@ -41,6 +41,7 @@
                         console.log(element)
                     //     console.log(this.dataShow)
                         this.message = element.delcontent;
+                        console.log(this.message)
                     // });
                 })
             })

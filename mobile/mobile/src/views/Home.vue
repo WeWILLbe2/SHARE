@@ -42,16 +42,18 @@
     <div class="kong"></div>
     <div class="msg" v-for="data in dataShow" :key="data.pid">
       <div class="usermsg">
-        <div class="userhead"></div>
+        <div class="userhead"><img src="../assets/logo.png" alt=""></div>
         <div>
-          <div>昵称{{data.myaccount}}</div>
+          <div>{{data.myaccount}}</div>
           <div>{{data.ptime}}</div>
         </div>
       </div>
       <div class="userCon">
-        <div> {{data.description}}</div>
-        <div class="images" v-for="item in data.img" :key="item">
-          <img :src="data.img">
+        <span>{{data.description}}</span>
+        <div>
+          <div class="images" v-for="item in data.img.split(',')" :key="item">
+            <img :src="item">
+          </div>
         </div>
       </div>
       <div class="like">
@@ -99,7 +101,6 @@
         nickname: "",
         dataShow: [],
         like: ""
-
       }
     },
     created: function () {
@@ -109,7 +110,7 @@
           response.data.forEach(element => {
             console.log(this.dataShow)
             this.dataShow = response.data;
-            // console.log(this.datashow[2].img)
+
           });
         })
         .catch(function (error) {
@@ -125,8 +126,11 @@
   }
 </script>
 <style>
-  .images>div {
-    display: flex;
+  .images{
+    margin-left: 30px;
+  }
+  .images>img {
+
     justify-content: start;
     margin-top: 10px;
 
@@ -145,13 +149,13 @@
 
   .share,
   .likes {
-    width: 20px;
-    height: 40px;
+    width: 42px;
+    height: 39px;
     font-size: 16px;
     line-height: 22px;
     /* background-color: rgb(155, 71, 71); */
     position: relative;
-    left: -62px;
+    left: -54px;
   }
 
 
@@ -210,10 +214,10 @@
     height: 150px;
   }
 
-  .userhead {
+  .userhead >img{
     width: 50px;
     height: 50px;
-    background-color: rgb(219, 124, 124);
+    /* background-color: rgb(219, 124, 124); */
     border-radius: 50%;
     margin-right: 10px;
   }
@@ -250,7 +254,14 @@
     box-sizing: border-box;
     text-align: left;
     padding-left: 12px;
+    /* display: flex; */
 
+  }
+
+  .userCon>div{
+    display: flex;
+     justify-content: start;
+     flex-wrap: wrap;
   }
 
   .like {

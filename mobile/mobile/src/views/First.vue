@@ -14,7 +14,7 @@
         background-image: url("../assets/00.jpg");
         /* background-repeat: no-repeat; */
         /* background-size: 100% 100%; */
-        height: 520px;
+        height: 670px;
         display: flex;
         justify-content: center;
     }
