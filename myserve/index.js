@@ -86,6 +86,15 @@ app.get('/getCon', (req, res) => {
     })
 });
 
+
+app.get('/getdelCon', (req, res) => {
+    let sql = "select * from del where 1";
+    mydb.query(sql, (err, results) => {
+        console.log(results)
+        res.json(results);
+    })
+});
+
 app.get('/', (req, res) => {
     res.send('Hello World!');
 });

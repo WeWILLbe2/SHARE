@@ -17,7 +17,7 @@
       <el-form-item label="确认密码" prop="rePassW">
         <el-input v-model="ruleForm.rePassW" type="password"></el-input>
       </el-form-item>
-      <el-form-item>
+      <el-form-item id="myr"> 
         <el-button type="primary" @click="submitForm('ruleForm')">注册</el-button>
         <el-button @click="resetForm('ruleForm')">重置</el-button>
       </el-form-item>
@@ -164,4 +164,7 @@
     margin-bottom: 22px;
     padding-right: 65px;
 }
+/* #myr{
+  margin-left: 100px;
+} */
 </style>
